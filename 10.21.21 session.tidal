@@ -1,0 +1,154 @@
+-- Function definitions
+
+setbpm t n = setcps(t/60/n)
+
+h = hush
+
+dawdle t = hurry (1/t)
+
+draw t = drawLine t
+
+reset = resetCycles
+
+kill = once $ sound "superpanic"
+
+kill
+
+-- Global settings
+
+h
+
+-- BPM
+-- LET'S VIBE :p
+-- AAAYYYYYYYYYY :):):):):):):):):):)
+
+setbpm 45 4
+
+setbpm 55 4
+
+setbpm 75 4
+
+setbpm 90 4
+
+setbpm 95 4
+
+setbpm 100 4
+
+setbpm 110 4
+
+setbpm 120 4
+
+setbpm 135 4
+
+-- VARIABLES
+
+-- Sample used: I Do Love You by Barbara Mason
+
+currentSample = "track-sample:23"
+
+dawdleSpeed = 2
+
+-- MELODY
+
+d1
+  $ stack [
+  (
+    -- VINYL
+    slow 1
+    -- $ juxBy 0.5 (# coarse 1)
+    -- $ swingBy ("q") 16
+    $ splice 256 "<[0 1 2 3 4 5 6 7]>"
+    $ sound "vinyl-crackle"
+    # gain 0.7
+    # coarse 1
+    # pan 0.5
+    # orbit 0
+  ),
+  (
+    juxBy 0.5 (# vowel "a e i o u")
+    $ qtrigger 1
+    $ swingBy (1/2) 4
+    $ dawdle dawdleSpeed
+    -- $ splice 256 ("3 4 7 6" |- "<25 24 23 22>")
+    $ splice 256 ("3 4 7 6 5 6 5 6" |- "<25 24 23 22>")
+    -- $ splice 256 ("3 4 7 6 5 6 5 8" |- "<45 44 43 42>")
+    -- $ splice 256 ("0 1 2 3 4 5 6 7" |- "<25 24 23 22>")
+    $ sound currentSample
+    # cut 1
+    # hpf "600"
+    # gain 0.9
+    # coarse 3
+    -- # gain (range 0.95 1 rand)
+    # orbit 1
+  ),
+  (
+    -- MELODY BASS :-) LOW END THEORY YO
+    -- juxBy 0.5 (# vowel "a e i o u")
+    swingBy (1/2) 4
+    $ qtrigger 1
+    $ dawdle dawdleSpeed
+    -- $ splice 256 ("3 4 7 6 5 6 5 8" |- "<45 44 43 42>")
+    $ splice 256 ("3 4 7 6 5 6 5 6" |- "<25 24 23 22>")
+    $ sound currentSample
+    # cut 1
+    # lpf "200"
+    # gain 1.1
+    # coarse 4
+    -- # gain (range 0.95 1 rand)
+    # orbit 2
+    -- # silence
+  )
+]
+
+d2
+  $ slow 2
+  $ n "[~ 0*4] ~ [~ 0*2] ~"
+  # sound "cave-kick:1"
+  -- # lpf "600"
+  # gain "<0.825>"
+  # coarse 3
+  # pan 0.5
+
+
+d3
+  $ swingBy (1/4) 4
+  $ slow 2
+  $ n "~ 0? ~ [~ <0*2 0>]"
+  # sound "cave-snare:1"
+  # gain "<0.79 0.81 0.815>"
+  # coarse 1
+  # pan "<0.62 0.61 0.625>"
+
+d4
+  $ ghost
+  $ swingBy (1/4) 16
+  $ slow 2
+  $ n "0 0*<2 3> 0 0 0 0*3 0 0 0 0 0*2 0 0 0*3 0 0"
+  # sound "cave-hihat:4"
+  # gain (range 0.7 0.8 rand)
+  # coarse 3
+  # pan (range 0.05 0.95 rand)
+
+d5
+  $ slow 2
+  $ n "~!3 [~ ~ ~ 0]"
+  # sound "cave-openhat"
+  # gain (range 0.825 0.875 rand)
+  # coarse 3
+  # pan 0.75
+
+d6
+  $ slow 2
+  $ n "[~ 0?] ~ [~ 0?] ~"
+  # sound "cave-perc:3"
+  # gain (range 0.8 0.85 rand)
+  # coarse 3
+  # pan 0.35
+
+d7
+  $ slow 4
+  $ n "[~ 0*2] ~ ~ ~"
+  # sound "cave-perc:7"
+  # gain (range 0.65 0.70 rand)
+  # coarse 2
+  # pan 0.125
