@@ -1,0 +1,143 @@
+-- Function/variable definitions
+
+setbpm t n = setcps(t/60/n)
+
+h = hush
+
+dawdle t = hurry (1/t)
+
+draw t = drawLine t
+
+reset = resetCycles
+
+killS = once $ s "superpanic"
+
+-- Global controls
+
+h
+
+killS
+
+-- Song
+
+setbpm 45 4
+
+setbpm 55 4
+
+setbpm 70 4
+
+setbpm 75 4
+
+setbpm 90 4
+
+setbpm 120 4
+
+setbpm 135 4
+
+-- MELODY
+
+sample = "track-sample:62"
+
+sample = "track-sample:55"
+
+sample = "track-sample:85"
+
+dSpe = 1
+
+d1
+$ stack [
+  (
+    qtrigger 1
+    -- $ juxBy 0.5 (# crush 16)
+    $ dawdle dSpe
+    $ swingBy (1/4) 4
+    $ slice 256 ("0 1 2 3" |+ "<20 21 22 23 24 25 26 27>")
+    $ sound sample
+    # orbit 0
+    # cut 1
+    -- # legato 0.5
+    -- # freeze 1
+    # vowel "a e i o u"
+    # hpf "400 600 700 800"
+    # gain 0.9
+    -- # silence
+  ),
+  (
+    qtrigger 1
+    $ swingBy (1/4) 4
+    $ dawdle dSpe
+    $ slice 256 ("0 1 2 3" |+ "<20 21 22 23 24 25 26 27>")
+    $ sound sample
+    # orbit 1
+    # shape 0.35
+    # coarse 2
+    # cut 1
+    # lpf "80"
+    # pan 0.5
+    # gain 0.9
+    -- # silence
+  )
+]
+-- # silence
+
+d2
+  $ swingBy (1/4) 4
+  $ slow 1
+  -- $ n "[0*2]!4"
+  $ n  "<[[0*2] ~ [0] ~] [[0] ~ [0*2] ~]>"
+  # sound "boom-bap-kick:19"
+  # orbit 1
+  # gain (range 0.85 0.9 rand)
+  # pan 0.5
+
+d3
+  $ swingBy (1/4) 4
+  $ slow 1
+  $ n "<[~ [0] ~ <~ [0]>]!2 [~ [0*2] [~ ~ ~ 0] [0*2]]>"
+  # sound "boom-bap-snare:10"
+  # orbit 2
+  # gain (range 0.85 0.9 rand)
+  # pan "<0.52 0.54>"
+
+d4
+  $ swingBy (1/4) 16
+  $ slow "<2 2 2 2>"
+  $ n "0!16"
+  # sound "boom-bap-shaker-crashes:3"
+  # orbit 4
+  # gain (range 0.5 0.55 rand)
+  # pan (range 0.05 0.2 rand)
+
+d5
+  $ swingBy (1/4) 4
+  $ slow 1
+  $ n "~ ~ ~ [~ ~ ~ 0]"
+  # sound "nightmare-perc:12"
+  # orbit 5
+  # gain (range 0.80 0.85 rand)
+  # pan (range 0.75 0.85 rand)
+
+d6
+  $ swingBy (1/4) 4
+  $ slow 2
+  $ sound "~ [~ dinma-vox:11] ~ [~ dinma-vox:13]"
+  # orbit 6
+  # gain (range 0.7 0.85 rand)
+  # coarse 2
+  # pan "0.1 0.95"
+
+d7
+  $ slow 2
+  $ sound "~ ~ ~ [~ ~ boom-bap-percs:23? ~] [~ ~ boom-bap-percs:23? ~] ~ ~ ~"
+  # crush 10
+  # orbit 7
+  # pan "0.65 0.38"
+  # gain (range 0.75 0.8 rand)
+
+d8
+  $ slow 1
+  $ sound "~ ~ ~ [~ ~ boom-bap-percs:29? ~] [~ ~ boom-bap-percs:29? ~] ~ ~ ~"
+  # crush 8
+  # orbit 8
+  # pan "0.38 0.68"
+  # gain (range 0.80 0.45 rand)
