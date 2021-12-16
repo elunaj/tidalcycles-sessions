@@ -1,0 +1,159 @@
+-- Function/variable definitions
+
+setbpm t n = setcps(t/60/n)
+
+h = hush
+
+dawdle t = hurry (1/t)
+
+draw t = drawLine t
+
+reset = resetCycles
+
+killS = once $ s "superpanic"
+
+-- Global controls
+
+h
+
+killS
+
+-- Song
+
+setbpm 45 4
+
+setbpm 55 4
+
+setbpm 70 4
+
+setbpm 75 4
+
+
+-- MELODY
+
+sample = "track-sample:82" -- y+
+
+
+ --
+d1
+$ stack [
+  (
+    qtrigger 1
+    -- $ juxBy 0.5 (# vowel "<a e i o u>")
+    $ dawdle 2
+    $ swingBy (1/"<2>") 4
+    $ splice 512 ("10 11 12 13 14 15 16 17" |+ "<[0 1 2 3]!4 [[-2 -3 -4 -5]!2]!2 [[15..18]!2]!4>")
+    $ sound sample
+    # hpf "<500 400 350 500>"
+    # delay 0.5
+    # delayt 0.5
+    # delayfb 0.2
+    # orbit 0
+    # cut 1
+    # legato 2
+    -- # real
+    -- # binshift 0.05
+    # scram 0.25
+    -- # silence
+    # leslie 0.3
+    # lrate 6
+    # lsize 1
+    # gain (range 0.9 1 rand)
+    -- # vowel "<a e i o u>"
+    -- # freeze 1
+    -- # pan 0.5
+  ),
+  (
+    qtrigger 1
+    $ dawdle 2
+    $ swingBy (1/"<2>") 4
+    -- $ splice 512 ("10 11 12 13 14 15 16 17" |+ "<[0 1 2 3]!4 [[-2 -3 -4 -5]!2]!4>")
+    $ splice 512 ("10 11 12 13 14 15 16 17" |+ "<[0 1 2 3]!4 [[-2 -3 -4 -5]!2]!2 [[15..18]!2]!4>")
+    $ sound sample
+    # lpf "<250>"
+    # orbit 1
+    # cut 1
+    # legato 2
+    # shape 0.3
+    # gain (range 0.9 1 rand)
+    -- # silence
+  )
+]
+
+-- # silence
+d2
+  $ slow 1
+  -- $ swingBy (1/4) 4
+  $ n "[~ ~ ~ 0] ~ 0 <[0*2] 0*2>"
+  # sound "cave-kick"
+  # orbit 2
+  # gain (range 0.85 0.95 rand)
+  # crush 8
+  # pan 0.5
+
+d3
+  $ slow 1
+  -- $ swingBy (1/4) 4
+  -- $ ghost
+  $ n "~ [~ ~ ~ 0] [~ 0] <[~ 0]? [~ 0*2] ~ [~ 0]>"
+  # sound "cave-snare"
+  # orbit 3
+  # gain 1
+  # crush 6
+  # pan 0.58
+  -- # delay 0.05
+  # shape 0.1
+  # gain (range 0.85 0.95 rand)
+--  # silence
+
+d4
+  $ slow "<2>"
+  $ swingBy (1/4) "<4>"
+  $ ghost
+  $ n "0 0 0 0 0*2 0 0 0 0 0 0 0*4 ~ 0 0*3 0"
+  -- $ n "0!16"
+  # sound "cave-hihat:1"
+  # coarse 3
+  # crush 6
+  # pan (range 0.24 0.42 rand)
+  # orbit 4
+  -- # delay 0.05
+  # gain (range 0.80 0.90 rand)
+
+d5
+  $ slow 2
+  -- $ swingBy (1/4) 4
+  $ n "~ ~ ~ [~ <0 0*2>]"
+  # sound "cave-openhat:2"
+  # crush 6
+  # pan 0.75
+  # orbit 5
+  # gain (range 0.85 0.9 rand)
+  -- # silence
+
+d6
+  -- $ swingBy (1/4) 4
+  $ slow "<2 2 4 4 4 4>"
+  $ ghost
+  $ sound "~ ~ [~ 0*2] ~ [~ 0] ~ ~ ~"
+  # sound "cave-snap:3"
+  # orbit 6
+  # gain (range 0.80 0.85 rand)
+  # coarse 2
+  # delay 0.1
+  -- # shape 0.1
+  # pan "0.05 0.95"
+  -- # silence
+
+d7
+  $ slow 2
+  $ swingBy (1/4) 4
+  $ n "~ ~ ~ ~ ~ ~ [0]/2 ~"
+  -- $ rev
+  # sound "goldeneye:61"
+  # coarse 3
+  # leslie 0.2
+  # shape 0.05
+  # pan "0.45"
+  # gain (range 0.8 0.9 rand)
+  # orbit 7
