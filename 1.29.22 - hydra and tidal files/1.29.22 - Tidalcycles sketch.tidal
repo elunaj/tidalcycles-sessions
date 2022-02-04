@@ -1,0 +1,155 @@
+-- Function definitions
+
+setbpm t n = setcps(t/60/n)
+
+h = hush
+
+dawdle t = hurry (1/t)
+
+draw t = drawLine t
+
+reset = resetCycles
+
+killS = once $ s "superpanic"
+
+-- Global settings
+
+setbpm 135 4
+
+setbpm 90 4
+
+setbpm 75 4
+
+setbpm 65 4
+
+setbpm 40 4
+
+sample = "track-sample:8"
+
+d1
+$ stack [
+  (
+    qtrigger 1
+     $ swingBy (1/4) 4
+     $ dawdle 1
+     $ ply 1
+     $ splice 512 ("<[0 4 8 12]>" |+ "<100!4 102!2 104!2>") -- main mel
+     -- $ splice 512 ("<[0 4 8 12]>" |+ "<300!2 301!2>") -- chorus
+     -- $ sound "track-sample:7"
+     $ s sample
+     # delay 0.5
+     # delaytime 0.1
+     # cut 1
+     # gain 1
+     # distort 0.125
+     # orbit 0
+     # hpf "<400 500 600>"
+     # vowel "<a e i o u>"
+     # freeze 1
+    -- # pan 0.5
+    # scram "<0.1 0.12>"
+    # leslie 0.3
+    -- # silence
+  ),
+  (
+    qtrigger 1
+     $ swingBy (1/4) 4
+     $ dawdle 1
+     $ ply 1
+     -- $ splice 256 ("1 2 4 5 6 7 8 9" |+ "<30 31 32 33>")
+     $ splice 512 ("<[2 10 7 12]>" |+ "<100>")
+     -- $ sound "track-sample:7"
+     $ s sample
+     -- # delay 0.5
+     -- # delaytime 0.5
+     # cut 1
+     # gain 1
+     # distort 0.05
+     # shape 0.2
+     # orbit 1
+     # lpf "<200>"
+    -- # vowel "<a e i o u>"
+    -- # freeze 1
+      # pan 0.5
+     -- # silence
+  )
+]
+
+d2
+  $ swingBy (1/4) 4
+  $ slow 2
+  -- $ n "<[[~ 0] ~ [~ 0] ~] [[0*4] ~ [~ 0] ~]>"
+  $ n "0 [0 ~ ~ 0] 0 [0 ~ 0 0]"
+  # s "cave-kick"
+  -- # vowel "<a e i o u>"
+  # pan 0.5
+  # cut 1
+  # coarse 3
+  # gain 0.87
+  # distort 0.05
+  # orbit 2
+  -- # vowel "<a e i o u>"
+
+d3
+  $ swingBy (1/4) 4
+  $ slow 2
+  -- $ "<[~ 0 ~ 0] [~ 0 ~ [~ 0*2]]>"
+  $ n "~ [~ 0 ~ 0] ~ [~ 0 ~ ~]"
+  # sound "cave-snare"
+  -- # vowel "a e i o u"
+  # pan (range 0.5 0.6 rand)
+  # intensity (range 0.7 0.9 rand)
+  # gain 0.87
+  # coarse 3
+  # orbit 3
+
+d4
+ -- $ swingBy (1/4) "<4 8 3 16>"
+ $ slow 2
+-- # $ ghost
+ $ n "0 0 0 0? 0 0*2 0 0 0 0 0*2 0 0 0? 0 0"
+ -- $ n "<[0*4 0*8 0*12 0*12]>"
+ # sound "cave-hihat"
+ -- # silence
+--  # vowel "a e i o u"
+  -- # cut 1
+  # pan (range 0.05 0.4 rand)
+  # distort 0.2
+  # gain 0.82
+  # orbit 4
+
+ d5
+  -- $ swingBy (1/4) 4
+  $ slow 1
+  $ "~ ~ ~ ~ ~ ~ ~ [0]"
+  # sound "cave-openhat"
+  # pan (range 0.8 0.9 rand)
+  # distort 0.2
+  # shape 0.1
+  # gain 0.78
+  # orbit 5
+
+  d6
+    $ slow 2
+    $ "~ ~ ~ 0"
+    # sound "<dinma-vox:13 dinma-vox:11>"
+    # coarse 4
+    # delay 0.1
+    # delaytime 0.1
+    # distort 0.1
+    # gain 0.9
+    # pan "<0.1 0.9>"
+    # orbit 6
+    # scram "<0.1 0.12>"
+    # leslie 0.3
+
+  d7
+    -- $ sometimesBy 0.5 (# vowel "a e i o u")
+    $ slow "1"
+    $ n "<~ [~ [~ ~ ~ 10] [~ 4] ~] ~ ~ ~ [~ [~ 10 ~ ~] [~ 4 4 ~] ~] ~ ~>"
+    # sound "cave-clap:7"
+    # pan (range 0.5 0.6 rand)
+    # gain 0.89
+    # coarse 2
+    # delay 0.1
+    # delaytime 0.1
